@@ -1,0 +1,2 @@
+# sRxTest
+scala stream test
