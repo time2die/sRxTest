@@ -1,0 +1,81 @@
+group 'org.time2die'
+version '1.0'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+
+    dependencies { classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.2.RELEASE") }
+}
+
+tasks.withType(ScalaCompile) {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'application'
+
+mainClassName = 'com.semrush.gat.Application'
+
+sourceSets.main.scala.srcDirs 'src/main/java', 'src/main/java'
+sourceSets.main.java.srcDirs = []
+
+springBoot {
+    executable = true
+}
+
+repositories {
+    mavenCentral()
+}
+
+task packageJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': version
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+springBoot {
+    mainClass = 'com.semrush.gat.Application'
+}
+
+dependencies {
+    compile('com.typesafe.akka:akka-actor_2.12:2.5.2') { exclude group: "org.scala-lang" }
+
+    compile 'org.scala-lang:scala-library:2.12.2'
+    compile 'org.springframework.boot:spring-boot-starter-web:1.5.2.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-jdbc:1.5.2.RELEASE'
+
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.8'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.8'
+    compile('com.fasterxml.jackson.module:jackson-module-scala_2.12:2.8.8') { exclude group: "org.scala-lang" }
+
+    compile("org.postgresql:postgresql:9.4.1212") { exclude group: "org.slf4j" }
+    compile('com.zaxxer:HikariCP:2.6.1') { exclude group: "org.slf4j" }
+
+    compile 'com.google.apis:google-api-services-analytics:v3-rev139-1.22.0'
+    compile 'com.google.apis:google-api-services-analyticsreporting:v4-rev114-1.22.0'
+    compile 'com.google.apis:google-api-services-webmasters:v3-rev23-1.22.0'
+    compile 'com.google.gdata:core:1.47.1'
+
+    compile("org.liquibase:liquibase-core:3.5.3") { exclude group: "org.eclipse.jetty" }
+
+    compile 'commons-validator:commons-validator:1.6'
+
+    testCompile 'org.scalatest:scalatest_2.11:3.0.1'
+    testCompile 'junit:junit:4.12'
+}
