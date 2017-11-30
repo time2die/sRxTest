@@ -1,36 +1,20 @@
 group 'org.time2die'
 version '1.0'
 
-buildscript {
-    repositories {
-        mavenCentral()
-        mavenLocal()
+apply plugin: 'idea'
+
+subprojects {
+    buildscript {
+        repositories {
+            mavenCentral()
+            mavenLocal()
+        }
     }
 }
 
-tasks.withType(ScalaCompile) {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+
+project(':client') {
+    apply plugin: 'application'
+    apply plugin: 'scala'
 }
 
-tasks.withType(JavaCompile) {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-}
-
-apply plugin: 'scala'
-apply plugin: 'idea'
-apply plugin: 'application'
-
-mainClassName = 'org.time2die.rxTest.ObservablesItems'
-sourceSets.main.scala.srcDirs 'src/main/java', 'src/main/java'
-sourceSets.main.java.srcDirs = []
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile 'org.scala-lang:scala-library:2.12.2'
-    compile group: 'io.reactivex', name: 'rxscala_2.12', version: '0.26.5'
-}
