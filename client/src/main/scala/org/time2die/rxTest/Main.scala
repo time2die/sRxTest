@@ -1,6 +1,6 @@
-package org.time2die.rxTest
+package org.time2die.rxTest.client
 
 
-object ObservablesItems extends App {
+object Main extends App {
   println("hell client")
 }

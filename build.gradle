@@ -34,8 +34,14 @@ subprojects {
     }
 }
 
-project(':client') {
-
+project(':server') {
     apply plugin: 'application'
-    mainClassName = 'org.time2die.rxTest.ObservablesItems'
+    mainClassName = 'org.time2die.rxTest.server.Server'
 }
+
+project(':client') {
+    apply plugin: 'application'
+    mainClassName = 'org.time2die.rxTest.client.Main'
+}
+
+
