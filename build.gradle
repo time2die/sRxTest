@@ -4,17 +4,41 @@ version '1.0'
 apply plugin: 'idea'
 
 subprojects {
+    apply plugin: 'scala'
+    sourceSets.main.scala.srcDirs 'src/main/java', 'src/main/java'
+    sourceSets.main.java.srcDirs = []
+
+    tasks.withType(ScalaCompile) {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
     buildscript {
         repositories {
             mavenCentral()
             mavenLocal()
         }
     }
-}
 
+    dependencies {
+        compile 'org.scala-lang:scala-library:2.12.2'
+
+    }
+}
 
 project(':client') {
-    apply plugin: 'application'
-    apply plugin: 'scala'
-}
 
+    apply plugin: 'application'
+    mainClassName = 'org.time2die.rxTest.ObservablesItems'
+
+
+}
